@@ -4,6 +4,12 @@ class App {
   async run() {
     const purchaseInput =
       await Console.readLineAsync('구매 금액을 입력해 주세요.\n');
+
+    const winnerLottoNumbersInput =
+      await Console.readLineAsync('당첨 번호를 입력해 주세요.\n');
+
+    const bonusLottoNumberInput =
+      await Console.readLineAsync('보너스 번호를 입력해 주세요.\n');
   }
 
   getLottoCount(purchaseAmount) {
