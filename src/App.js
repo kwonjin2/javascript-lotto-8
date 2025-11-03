@@ -21,12 +21,10 @@ class App {
   async run() {
     const purchaseInput =
       await Console.readLineAsync('구매 금액을 입력해 주세요.\n');
-
     this.validatePurchaseAmount(purchaseInput);
 
     const lottoCount = this.getLottoCount(purchaseInput);
     const lottos = Lotto.generateLottos(lottoCount);
-
     Console.print(`${lottoCount}개를 구매했습니다.\n`);
     lottos.forEach((lotto) =>
       Console.print(`[${lotto.getNumbers().join(', ')}]`)
@@ -35,18 +33,18 @@ class App {
     const winnerLottoNumbersInput = await Console.readLineAsync(
       '\n당첨 번호를 입력해 주세요.\n'
     );
+    const winningNumbers = this.parseWinningNumbers(winnerLottoNumbersInput);
+    this.validateWinningNumbers(winningNumbers);
+
     const bonusLottoNumberInput = await Console.readLineAsync(
       '\n보너스 번호를 입력해 주세요.\n'
     );
-
-    const winningNumbers = this.parseWinningNumbers(winnerLottoNumbersInput);
     const bonusNumber = Number(bonusLottoNumberInput);
 
     this.updateWinningStatistics(lottos, winningNumbers, bonusNumber);
 
     const totalPrize = this.getTotalPrize();
     const profitRate = this.calculateProfitRate(purchaseInput);
-
     this.printStatistics(totalPrize, profitRate);
   }
 
@@ -117,6 +115,24 @@ class App {
       throw new Error('[ERROR] 구매 금액은 1,000원 이상이어야 합니다.');
     if (money % 1000 !== 0)
       throw new Error('[ERROR] 구매 금액은 1,000원 단위로 입력해 주세요.');
+  }
+
+  validateWinningNumbers(numbers) {
+    const parsedNumbers = numbers.map((n) => Number(n));
+
+    parsedNumbers.forEach((number) => {
+      if (isNaN(number))
+        throw new Error('[ERROR] 당첨 번호는 숫자로 입력해 주세요.');
+      if (number < 1 || number > 45)
+        throw new Error('[ERROR] 당첨 번호는 1 ~ 45 범위로 입력해 주세요.');
+    });
+
+    if (parsedNumbers.length !== 6)
+      throw new Error('[ERROR] 당첨 번호는 6개여야 합니다.');
+
+    const unique = new Set(parsedNumbers);
+    if (unique.size !== parsedNumbers.length)
+      throw new Error('[ERROR] 당첨 번호는 중복될 수 없습니다.');
   }
 }
 
