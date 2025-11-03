@@ -40,6 +40,7 @@ class App {
       '\n보너스 번호를 입력해 주세요.\n'
     );
     const bonusNumber = Number(bonusLottoNumberInput);
+    this.validateBonusNumber(bonusNumber, winningNumbers);
 
     this.updateWinningStatistics(lottos, winningNumbers, bonusNumber);
 
@@ -133,6 +134,18 @@ class App {
     const unique = new Set(parsedNumbers);
     if (unique.size !== parsedNumbers.length)
       throw new Error('[ERROR] 당첨 번호는 중복될 수 없습니다.');
+  }
+
+  validateBonusNumber(number, winningNumbers) {
+    const bonusNumber = Number(number);
+
+    if (isNaN(bonusNumber))
+      throw new Error('[ERROR] 보너스 번호는 숫자로 입력해 주세요.');
+    if (bonusNumber < 1 || bonusNumber > 45)
+      throw new Error('[ERROR] 보너스 번호는 1 ~ 45 범위로 입력해 주세요.');
+
+    if (winningNumbers.includes(bonusNumber))
+      throw new Error('[ERROR] 보너스 번호는 당첨 번호와 중복될 수 없습니다.');
   }
 }
 
