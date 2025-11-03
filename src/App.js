@@ -32,6 +32,10 @@ class App {
   sortLottoNumbers(lotto) {
     return lotto.sort((a, b) => a - b);
   }
+
+  parseWinningNumbers(winningNumbers) {
+    return winningNumbers.split(',').map((s) => Number(s));
+  }
 }
 
 export default App;
