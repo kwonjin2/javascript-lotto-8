@@ -2,7 +2,7 @@ import { Console } from '@woowacourse/mission-utils';
 
 class OutputHandler {
   static printLottoCount(lottoCount) {
-    Console.print(`\n${lottoCount}개를 구매했습니다.\n`);
+    Console.print(`\n${lottoCount}개를 구매했습니다.`);
   }
 
   static printLotto(lottos) {
@@ -11,7 +11,7 @@ class OutputHandler {
     );
   }
 
-  static printStatistics(totalPrize, profitRate, winningRank) {
+  static printStatistics(profitRate, winningRank) {
     Console.print('\n당첨 통계');
     Console.print('---');
     Console.print(`3개 일치 (5,000원) - ${winningRank.match3}개`);
@@ -21,7 +21,6 @@ class OutputHandler {
       `5개 일치, 보너스 볼 일치 (30,000,000원) - ${winningRank.match5AndBonus}개`
     );
     Console.print(`6개 일치 (2,000,000,000원) - ${winningRank.match6}개`);
-    Console.print(`총 당첨금: ${totalPrize.toLocaleString()}원`);
     Console.print(`총 수익률은 ${profitRate}%입니다.`);
   }
 }
