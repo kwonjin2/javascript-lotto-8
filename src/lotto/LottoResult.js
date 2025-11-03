@@ -29,4 +29,19 @@ class LottoResult {
       if (matchCount === 6) this.#winningRank.match6++;
     }
   }
+
+  getTotalPrize() {
+    const prizeMap = {
+      match3: this.#prizeTable[5],
+      match4: this.#prizeTable[4],
+      match5: this.#prizeTable[3],
+      match5AndBonus: this.#prizeTable[2],
+      match6: this.#prizeTable[1],
+    };
+
+    return Object.entries(this.winningRank).reduce(
+      (sum, [rank, count]) => sum + (prizeMap[rank] ?? 0) * count,
+      0
+    );
+  }
 }
