@@ -1,6 +1,14 @@
 import { Console, Random } from '@woowacourse/mission-utils';
 
 class App {
+  winningRank = {
+    match3: 0,
+    match4: 0,
+    match5: 0,
+    match5AndBonus: 0,
+    match6: 0,
+  };
+
   async run() {
     const purchaseInput =
       await Console.readLineAsync('구매 금액을 입력해 주세요.\n');
@@ -14,6 +22,7 @@ class App {
 
   getLottoCount(purchaseAmount) {
     const count = Number(purchaseAmount) / 1000;
+    this.winningRank.match3++;
     return count;
   }
 
@@ -47,6 +56,22 @@ class App {
     }
 
     return { matchCount, hasBonus };
+  }
+
+  updateWinningStatistics(lottos, winningNumbers, bonusNumber) {
+    for (const lotto of lottos) {
+      const { matchCount, hasBonus } = this.compareWithWinningNumbers(
+        lotto,
+        winningNumbers,
+        bonusNumber
+      );
+
+      if (matchCount === 3) this.winningRank.match3++;
+      if (matchCount === 4) this.winningRank.match4++;
+      if (matchCount === 5 && hasBonus) this.winningRank.match5++;
+      if (matchCount === 5 && !hasBonus) this.winningRank.match5AndBonus++;
+      if (matchCount === 6) this.winningRank.match6++;
+    }
   }
 }
 
