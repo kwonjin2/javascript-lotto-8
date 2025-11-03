@@ -15,6 +15,10 @@ class LottoResult {
     5: 5000,
   };
 
+  getWinningRank() {
+    return { ...this.#winningRank };
+  }
+
   updateWinningStatistics(lottos, winningNumbers, bonusNumber) {
     for (const lotto of lottos) {
       const { matchCount, hasBonus } = lotto.compareWithWinningNumbers(
