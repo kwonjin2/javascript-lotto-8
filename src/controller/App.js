@@ -1,8 +1,8 @@
-import Lotto from './lotto/Lotto.js';
-import LottoResult from './lotto/LottoResult.js';
-import LottoUtils from './lotto/LottoUtils.js';
-import InputHandler from './view/InputHandler.js';
-import OutputHandler from './view/OutputHandler.js';
+import Lotto from '../lotto/Lotto.js';
+import LottoResult from '../lotto/LottoResult.js';
+import LottoUtils from '../lotto/LottoUtils.js';
+import InputHandler from '../view/InputHandler.js';
+import OutputHandler from '../view/OutputHandler.js';
 
 class App {
   async run() {
