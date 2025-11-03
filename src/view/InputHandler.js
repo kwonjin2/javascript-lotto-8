@@ -1,4 +1,5 @@
 import { Console } from '@woowacourse/mission-utils';
+import { MESSAGES, ERROR_MESSAGES } from '../constants/constants.js';
 
 class InputHandler {
   static async readInputWithValidation(message, validateFn) {
@@ -15,7 +16,7 @@ class InputHandler {
 
   static async readPurchaseAmount() {
     const input = await this.readInputWithValidation(
-      '구매 금액을 입력해 주세요.\n',
+      MESSAGES.PURCHASE_AMOUNT_PROMPT,
       this.validatePurchaseAmount
     );
 
@@ -24,7 +25,7 @@ class InputHandler {
 
   static async readWinningNumbers() {
     const input = await this.readInputWithValidation(
-      '\n당첨 번호를 입력해 주세요.\n',
+      MESSAGES.WINNING_NUMBERS_PROMPT,
       (raw) => this.validateWinningNumbers(this.parseWinningNumbers(raw))
     );
 
@@ -33,7 +34,7 @@ class InputHandler {
 
   static async readBonusNumber(winningNumbers) {
     const input = await this.readInputWithValidation(
-      '\n보너스 번호를 입력해 주세요.\n',
+      MESSAGES.BONUS_NUMBER_PROMPT,
       (raw) => this.validateBonusNumber(Number(raw), winningNumbers)
     );
 
@@ -46,36 +47,31 @@ class InputHandler {
 
   static validatePurchaseAmount(purchaseAmount) {
     const money = Number(purchaseAmount);
-    if (isNaN(money))
-      throw new Error('[ERROR] 구매 금액은 숫자로 입력해 주세요.');
-    if (money < 1000)
-      throw new Error('[ERROR] 구매 금액은 1,000원 이상이어야 합니다.');
-    if (money % 1000 !== 0)
-      throw new Error('[ERROR] 구매 금액은 1,000원 단위로 입력해 주세요.');
+    if (isNaN(money)) throw new Error(ERROR_MESSAGES.PURCHASE_NUMBER);
+    if (money < 1000) throw new Error(ERROR_MESSAGES.MIN_PURCHASE);
+    if (money % 1000 !== 0) throw new Error(ERROR_MESSAGES.UNIT_PURCHASE);
   }
 
   static validateWinningNumbers(numbers) {
     numbers.forEach((number) => {
-      if (isNaN(number))
-        throw new Error('[ERROR] 당첨 번호는 숫자로 입력해 주세요.');
+      if (isNaN(number)) throw new Error(ERROR_MESSAGES.WINNING_NUMBER_FORMAT);
       if (number < 1 || number > 45)
-        throw new Error('[ERROR] 당첨 번호는 1 ~ 45 범위로 입력해 주세요.');
+        throw new Error(ERROR_MESSAGES.WINNING_NUMBER_RANGE);
     });
 
     if (numbers.length !== 6)
-      throw new Error('[ERROR] 당첨 번호는 6개여야 합니다.');
+      throw new Error(ERROR_MESSAGES.WINNING_NUMBER_COUNT);
     const unique = new Set(numbers);
     if (unique.size !== numbers.length)
-      throw new Error('[ERROR] 당첨 번호는 중복될 수 없습니다.');
+      throw new Error(ERROR_MESSAGES.WINNING_NUMBER_DUPLICATE);
   }
 
   static validateBonusNumber(bonusNumber, winningNumbers) {
-    if (isNaN(bonusNumber))
-      throw new Error('[ERROR] 보너스 번호는 숫자로 입력해 주세요.');
+    if (isNaN(bonusNumber)) throw new Error(ERROR_MESSAGES.BONUS_NUMBER_FORMAT);
     if (bonusNumber < 1 || bonusNumber > 45)
-      throw new Error('[ERROR] 보너스 번호는 1 ~ 45 범위로 입력해 주세요.');
+      throw new Error(ERROR_MESSAGES.BONUS_NUMBER_RANGE);
     if (winningNumbers.includes(bonusNumber))
-      throw new Error('[ERROR] 보너스 번호는 당첨 번호와 중복될 수 없습니다.');
+      throw new Error(ERROR_MESSAGES.BONUS_NUMBER_DUPLICATE);
   }
 }
 
