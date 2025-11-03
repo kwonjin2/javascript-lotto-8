@@ -14,4 +14,19 @@ class LottoResult {
     4: 50000,
     5: 5000,
   };
+
+  updateWinningStatistics(lottos, winningNumbers, bonusNumber) {
+    for (const lotto of lottos) {
+      const { matchCount, hasBonus } = lotto.compareWithWinningNumbers(
+        winningNumbers,
+        bonusNumber
+      );
+
+      if (matchCount === 3) this.#winningRank.match3++;
+      if (matchCount === 4) this.#winningRank.match4++;
+      if (matchCount === 5 && !hasBonus) this.#winningRank.match5++;
+      if (matchCount === 5 && hasBonus) this.#winningRank.match5AndBonus++;
+      if (matchCount === 6) this.#winningRank.match6++;
+    }
+  }
 }
