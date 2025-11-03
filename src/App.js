@@ -96,6 +96,12 @@ class App {
       0
     );
   }
+
+  calculateProfitRate(purchaseAmount) {
+    const totalPrize = this.getTotalPrize();
+    const profitRate = (totalPrize / purchaseAmount) * 100;
+    return profitRate.toFixed(2);
+  }
 }
 
 export default App;
