@@ -23,4 +23,9 @@ describe('로또 클래스 테스트', () => {
       new Lotto([1, 2, 3, 4, 5, 46]);
     }).toThrow('[ERROR]');
   });
+
+  test('로또 번호가 정상적으로 생성되고 오름차순 정렬된다', () => {
+    const lotto = new Lotto([19, 3, 8, 21, 16, 31]);
+    expect(lotto.getNumbers()).toEqual([3, 8, 16, 19, 21, 31]);
+  });
 });
