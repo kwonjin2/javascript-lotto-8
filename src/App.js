@@ -36,6 +36,18 @@ class App {
   parseWinningNumbers(winningNumbers) {
     return winningNumbers.split(',').map((s) => Number(s));
   }
+
+  compareWithWinningNumbers(lotto, winningNumbers, bonusNumber) {
+    let matchCount = 0;
+    let hasBonus = false;
+
+    for (let i = 0; i < lotto.length; i++) {
+      if (winningNumbers.includes(lotto[i])) matchCount++;
+      if (lotto[i] === bonusNumber) hasBonus = true;
+    }
+
+    return { matchCount, hasBonus };
+  }
 }
 
 export default App;
