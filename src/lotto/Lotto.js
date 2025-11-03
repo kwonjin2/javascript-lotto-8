@@ -1,4 +1,5 @@
 import { Random } from '@woowacourse/mission-utils';
+import { LOTTO, ERROR_MESSAGES } from '../constants/constants.js';
 
 class Lotto {
   #numbers;
@@ -10,16 +11,16 @@ class Lotto {
 
   #validate(numbers) {
     if (numbers.length !== 6) {
-      throw new Error('[ERROR] 로또 번호는 6개여야 합니다.');
+      throw new Error(ERROR_MESSAGES.LOTTO_NUMBER_COUNT);
     }
 
     const uniqueNumbers = new Set(numbers);
     if (uniqueNumbers.size !== numbers.length)
-      throw new Error('[ERROR] 로또 번호는 중복될 수 없습니다.');
+      throw new Error(ERROR_MESSAGES.LOTTO_NUMBER_DUPLICATE);
 
     for (let i = 0; i < numbers.length; i++) {
-      if (numbers[i] < 1 || numbers[i] > 45)
-        throw new Error('[ERROR] 로또 번호는 1~45 범위여야 합니다.');
+      if (numbers[i] < LOTTO.MIN_NUMBER || numbers[i] > LOTTO.MAX_NUMBER)
+        throw new Error(ERROR_MESSAGES.LOTTO_NUMBER_RANGE);
     }
   }
 
@@ -27,7 +28,11 @@ class Lotto {
     const result = [];
 
     for (let i = 0; i < lottoCount; i++) {
-      const numbers = Random.pickUniqueNumbersInRange(1, 45, 6);
+      const numbers = Random.pickUniqueNumbersInRange(
+        LOTTO.MIN_NUMBER,
+        LOTTO.MAX_NUMBER,
+        LOTTO.NUMBER_COUNT
+      );
       result.push(new Lotto(numbers));
     }
 
