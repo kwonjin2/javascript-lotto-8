@@ -43,7 +43,7 @@ class LottoResult {
       match6: this.#prizeTable[1],
     };
 
-    return Object.entries(this.winningRank).reduce(
+    return Object.entries(this.#winningRank).reduce(
       (sum, [rank, count]) => sum + (prizeMap[rank] ?? 0) * count,
       0
     );
@@ -55,3 +55,5 @@ class LottoResult {
     return profitRate.toFixed(1);
   }
 }
+
+export default LottoResult;
