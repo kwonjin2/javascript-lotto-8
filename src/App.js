@@ -22,6 +22,8 @@ class App {
     const purchaseInput =
       await Console.readLineAsync('구매 금액을 입력해 주세요.\n');
 
+    this.validatePurchaseAmount(purchaseInput);
+
     const lottoCount = this.getLottoCount(purchaseInput);
     const lottos = Lotto.generateLottos(lottoCount);
 
@@ -105,6 +107,16 @@ class App {
     Console.print(`6개 일치 (2,000,000,000원) - ${this.winningRank.match6}개`);
     Console.print(`총 당첨금: ${totalPrize.toLocaleString()}원`);
     Console.print(`총 수익률은 ${profitRate}%입니다.`);
+  }
+
+  validatePurchaseAmount(purchaseAmount) {
+    const money = Number(purchaseAmount);
+    if (isNaN(money))
+      throw new Error('[ERROR] 구매 금액은 숫자로 입력해 주세요.');
+    if (money < 1000)
+      throw new Error('[ERROR] 구매 금액은 1,000원 이상이어야 합니다.');
+    if (money % 1000 !== 0)
+      throw new Error('[ERROR] 구매 금액은 1,000원 단위로 입력해 주세요.');
   }
 }
 
