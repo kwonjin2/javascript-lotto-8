@@ -1,26 +1,43 @@
 import { Console } from '@woowacourse/mission-utils';
 
 class InputHandler {
+  static async readInputWithValidation(message, validateFn) {
+    while (true) {
+      try {
+        const input = await Console.readLineAsync(message);
+        validateFn(input);
+        return input;
+      } catch (error) {
+        Console.print(error.message);
+      }
+    }
+  }
+
   static async readPurchaseAmount() {
-    const input = await Console.readLineAsync('구매 금액을 입력해 주세요.\n');
-    this.validatePurchaseAmount(input);
+    const input = await this.readInputWithValidation(
+      '구매 금액을 입력해 주세요.\n',
+      this.validatePurchaseAmount
+    );
+
     return Number(input);
   }
 
   static async readWinningNumbers() {
-    const input = await Console.readLineAsync('\n당첨 번호를 입력해 주세요.\n');
-    const numbers = this.parseWinningNumbers(input);
-    this.validateWinningNumbers(numbers);
-    return numbers;
+    const input = await this.readInputWithValidation(
+      '\n당첨 번호를 입력해 주세요.\n',
+      (raw) => this.validateWinningNumbers(this.parseWinningNumbers(raw))
+    );
+
+    return this.parseWinningNumbers(input);
   }
 
   static async readBonusNumber(winningNumbers) {
-    const input = await Console.readLineAsync(
-      '\n보너스 번호를 입력해 주세요.\n'
+    const input = await this.readInputWithValidation(
+      '\n보너스 번호를 입력해 주세요.\n',
+      (raw) => this.validateBonusNumber(Number(raw), winningNumbers)
     );
-    const bonusNumber = Number(input);
-    this.validateBonusNumber(bonusNumber, winningNumbers);
-    return bonusNumber;
+
+    return Number(input);
   }
 
   static parseWinningNumbers(winningNumbers) {
