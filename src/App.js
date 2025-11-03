@@ -1,5 +1,6 @@
 import Lotto from './lotto/Lotto.js';
 import LottoResult from './lotto/LottoResult.js';
+import LottoUtils from './lotto/LottoUtils.js';
 import InputHandler from './view/InputHandler.js';
 import OutputHandler from './view/OutputHandler.js';
 
@@ -9,7 +10,7 @@ class App {
     const purchaseInput = await InputHandler.readPurchaseAmount();
 
     // 2. 로또 생성
-    const lottoCount = this.getLottoCount(purchaseInput);
+    const lottoCount = LottoUtils.getLottoCount(purchaseInput);
     const lottos = Lotto.generateLottos(lottoCount);
 
     // 3. 로또 결과 출력
@@ -35,11 +36,6 @@ class App {
     const winningRank = lottoResult.getWinningRank();
 
     OutputHandler.printStatistics(totalPrize, profitRate, winningRank);
-  }
-
-  getLottoCount(purchaseAmount) {
-    const count = Number(purchaseAmount) / 1000;
-    return count;
   }
 }
 
