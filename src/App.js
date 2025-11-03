@@ -9,6 +9,14 @@ class App {
     match6: 0,
   };
 
+  prizeTable = {
+    1: 2000000000,
+    2: 30000000,
+    3: 1500000,
+    4: 50000,
+    5: 5000,
+  };
+
   async run() {
     const purchaseInput =
       await Console.readLineAsync('구매 금액을 입력해 주세요.\n');
@@ -72,6 +80,21 @@ class App {
       if (matchCount === 5 && !hasBonus) this.winningRank.match5AndBonus++;
       if (matchCount === 6) this.winningRank.match6++;
     }
+  }
+
+  getTotalPrize() {
+    const prizeMap = {
+      match3: this.prizeTable[5],
+      match4: this.prizeTable[4],
+      match5: this.prizeTable[3],
+      match5AndBonus: this.prizeTable[2],
+      match6: this.prizeTable[1],
+    };
+
+    return Object.entries(this.winningRank).reduce(
+      (sum, [rank, count]) => sum + (prizeMap[rank] ?? 0) * count,
+      0
+    );
   }
 }
 
