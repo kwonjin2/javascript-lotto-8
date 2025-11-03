@@ -21,11 +21,27 @@ class App {
     const purchaseInput =
       await Console.readLineAsync('구매 금액을 입력해 주세요.\n');
 
-    const winnerLottoNumbersInput =
-      await Console.readLineAsync('당첨 번호를 입력해 주세요.\n');
+    const lottoCount = this.getLottoCount(purchaseInput);
+    const lottos = this.generateLottos(lottoCount);
+    Console.print(`${lottoCount}개를 구매했습니다.\n`);
+    lottos.forEach((lotto) => Console.print(`[${lotto.join(', ')}]`));
 
-    const bonusLottoNumberInput =
-      await Console.readLineAsync('보너스 번호를 입력해 주세요.\n');
+    const winnerLottoNumbersInput = await Console.readLineAsync(
+      '\n당첨 번호를 입력해 주세요.\n'
+    );
+    const bonusLottoNumberInput = await Console.readLineAsync(
+      '\n보너스 번호를 입력해 주세요.\n'
+    );
+
+    const winningNumbers = this.parseWinningNumbers(winnerLottoNumbersInput);
+    const bonusNumber = Number(bonusLottoNumberInput);
+
+    this.updateWinningStatistics(lottos, winningNumbers, bonusNumber);
+
+    const totalPrize = this.getTotalPrize();
+    const profitRate = this.calculateProfitRate(purchaseInput);
+
+    this.printStatistics(totalPrize, profitRate);
   }
 
   getLottoCount(purchaseAmount) {
@@ -100,7 +116,7 @@ class App {
   calculateProfitRate(purchaseAmount) {
     const totalPrize = this.getTotalPrize();
     const profitRate = (totalPrize / purchaseAmount) * 100;
-    return profitRate.toFixed(2);
+    return profitRate.toFixed(1);
   }
 
   printStatistics(totalPrize, profitRate) {
