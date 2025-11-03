@@ -1,3 +1,5 @@
+import { PRIZE } from '../constants/constants.js';
+
 class LottoResult {
   #winningRank = {
     match3: 0,
@@ -8,11 +10,11 @@ class LottoResult {
   };
 
   #prizeTable = {
-    1: 2000000000,
-    2: 30000000,
-    3: 1500000,
-    4: 50000,
-    5: 5000,
+    1: PRIZE.MATCH6,
+    2: PRIZE.MATCH5_BONUS,
+    3: PRIZE.MATCH5,
+    4: PRIZE.MATCH4,
+    5: PRIZE.MATCH3,
   };
 
   getWinningRank() {
