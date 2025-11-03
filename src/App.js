@@ -35,7 +35,7 @@ class App {
     const profitRate = lottoResult.calculateProfitRate(purchaseInput);
     const winningRank = lottoResult.getWinningRank();
 
-    OutputHandler.printStatistics(totalPrize, profitRate, winningRank);
+    OutputHandler.printStatistics(profitRate, winningRank);
   }
 }
 
