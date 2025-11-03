@@ -12,6 +12,15 @@ class Lotto {
     if (numbers.length !== 6) {
       throw new Error('[ERROR] 로또 번호는 6개여야 합니다.');
     }
+
+    const uniqueNumbers = new Set(numbers);
+    if (uniqueNumbers.size !== numbers.length)
+      throw new Error('[ERROR] 로또 번호는 중복될 수 없습니다.');
+
+    for (let i = 0; i < numbers.length; i++) {
+      if (numbers[i] < 1 || numbers[i] > 45)
+        throw new Error('[ERROR] 로또 번호는 1~45 범위여야 합니다.');
+    }
   }
 
   static generateLottos(lottoCount) {
