@@ -1,8 +1,9 @@
 import { Console } from '@woowacourse/mission-utils';
+import { OUTPUT_MESSAGES } from '../constants/constants.js';
 
 class OutputHandler {
   static printLottoCount(lottoCount) {
-    Console.print(`\n${lottoCount}개를 구매했습니다.`);
+    Console.print(OUTPUT_MESSAGES.PURCHASED_COUNT(lottoCount));
   }
 
   static printLotto(lottos) {
@@ -12,16 +13,16 @@ class OutputHandler {
   }
 
   static printStatistics(profitRate, winningRank) {
-    Console.print('\n당첨 통계');
-    Console.print('---');
-    Console.print(`3개 일치 (5,000원) - ${winningRank.match3}개`);
-    Console.print(`4개 일치 (50,000원) - ${winningRank.match4}개`);
-    Console.print(`5개 일치 (1,500,000원) - ${winningRank.match5}개`);
+    Console.print(OUTPUT_MESSAGES.STATISTICS_HEADER);
+    Console.print(OUTPUT_MESSAGES.STATISTICS_SEPARATOR);
+    Console.print(OUTPUT_MESSAGES.STATISTICS_MATCH3(winningRank.match3));
+    Console.print(OUTPUT_MESSAGES.STATISTICS_MATCH4(winningRank.match4));
+    Console.print(OUTPUT_MESSAGES.STATISTICS_MATCH5(winningRank.match5));
     Console.print(
-      `5개 일치, 보너스 볼 일치 (30,000,000원) - ${winningRank.match5AndBonus}개`
+      OUTPUT_MESSAGES.STATISTICS_MATCH5_BONUS(winningRank.match5AndBonus)
     );
-    Console.print(`6개 일치 (2,000,000,000원) - ${winningRank.match6}개`);
-    Console.print(`총 수익률은 ${profitRate}%입니다.`);
+    Console.print(OUTPUT_MESSAGES.STATISTICS_MATCH6(winningRank.match6));
+    Console.print(OUTPUT_MESSAGES.PROFIT_RATE(profitRate));
   }
 }
 
